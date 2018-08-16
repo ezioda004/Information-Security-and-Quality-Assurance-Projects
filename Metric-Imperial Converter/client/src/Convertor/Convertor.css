@@ -1,0 +1,52 @@
+main > form, section {
+    display: flex;
+    justify-content: center;
+}
+main form > div {
+    margin: 20px;
+    margin-top: 50px;
+    height: 300px;
+    min-width: 20%;
+    max-width: 40%;
+}
+section {
+    justify-content: space-evenly;
+}
+section > div {
+    margin: 20px;
+    width: 40%;
+}
+input {
+    line-height: 30px;
+    font-size: 1.25em;
+    border-radius: 10px;
+    border: 1.5px black solid;
+    width: 30px;
+    transition: all 0.5s;
+}
+input:focus {
+    width: 200px;
+}
+.unit {
+    min-width: inherit;
+}
+select {
+    font-family: 'Sawarabi Mincho', sans-serif;
+    padding: 5px 10px;
+    border: 0;
+    border-bottom: 2px black solid;
+    cursor: pointer;
+}
+option:hover {
+    cursor: pointer;
+}
+.result div {
+    background: whitesmoke;
+    line-height: 30px;
+}
+
+summary {
+    background: linear-gradient(to bottom, #ffffff 0%,#ededed 41%,#f3f3f3 51%,#ffffff 100%);
+    line-height: 30px;
+    cursor: pointer;
+}
