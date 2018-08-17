@@ -1,7 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
+const path = require("path");
 const app = express();
-
 const PORT = process.env.PORT || 1337;
 
 //logic
@@ -36,19 +36,30 @@ app.use(helmet({
     }
 }));
 
+app.use(express.static(path.join(__dirname, "../views", "build")));
+
 app.get("/", (req, res) => {
-    res.send("Hello World");
+    res.sendFile(path.join(__dirname, "../views", "build", "index.html"));
 });
+
 app.get("/api/convert", (req, res) => {
-    console.log(req.query);
-    let x = convert(req.query.input, req.query.unit);
+    console.log("here", req.query)
+    let query = {input: req.query.input, unit: req.query.unit};
+    if (!("unit" in req.query)){
+        const tmp = req.query.input.match(/[0-9]+|[a-z]+/gi);
+        query.input = tmp[0] || 1;
+        query.unit = tmp[1] || "gal";
+    }
+    console.log(query)
+    let x = convert(query.input, query.unit);
     console.log(x);
     res.send(x);
 })
 
-app.all("*", (req, res) => {
-    console.log("here");
-    res.send("Error");
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../views", "build", "index.html"));
 })
+
+
 
 app.listen(PORT, () => console.log(`Server is running on the Port ${PORT}`));

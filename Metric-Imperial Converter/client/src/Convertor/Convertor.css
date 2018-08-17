@@ -58,3 +58,7 @@ summary {
 li {
     list-style-position: inside;
 }
+footer {
+    position: relative;
+    top: 100px;
+}

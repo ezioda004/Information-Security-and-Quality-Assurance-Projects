@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import "./App.css";
 import Api from "../Api/Api";
 
@@ -21,7 +21,9 @@ class App extends Component {
           component = {Api}
         />
         <Route render = {() => (
-          <div>Wrong path!!</div>
+          <div><h1>404 Page Not Found</h1>
+            <p>The page you're looking for doesnt exist. Please click <Link to = "/">here</Link> to go back to the main page.</p>
+          </div>
         )} />
         </Switch>
       </div>
