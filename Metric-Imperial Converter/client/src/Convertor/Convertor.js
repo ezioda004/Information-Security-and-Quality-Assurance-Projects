@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Footer from "../Footer/Footer";
 import "./Convertor.css";
 
 class Convertor extends Component {
@@ -18,9 +19,8 @@ class Convertor extends Component {
   }
   handleChange = event => {
     let val = event.target;
-    console.log(event.target.value, event.target.nodeName);
     let node = event.target.nodeName;
-    if (node == "INPUT") {
+    if (node === "INPUT") {
       this.setState(prevState => ({
         send: {
           input: val.value,
@@ -38,20 +38,22 @@ class Convertor extends Component {
     axios
       .get("/api/convert", {
         params: {
-          input: node == "INPUT" ? event.target.value : this.state.send.input,
-          unit: node == "INPUT" ? this.state.send.unit : event.target.value
+          input: node === "INPUT" ? event.target.value : this.state.send.input,
+          unit: node === "INPUT" ? this.state.send.unit : event.target.value
         }
       })
-      .then(res => this.setState({
-        recieve: {
-          input: res.data.returnNum,
-          unit: res.data.returnUnit
-        }
-      }))
+      .then(res =>
+        this.setState({
+          recieve: {
+            input: res.data.returnNum,
+            unit: res.data.returnUnit
+          }
+        })
+      )
       .catch(err => console.log(err));
   };
   render() {
-    const option = Array("gal", "L", "lbs", "kg", "mi", "km").map(unit => (
+    const option = ["gal", "L", "lbs", "kg", "mi", "km"].map(unit => (
       <option key={unit} value={unit}>
         {unit}
       </option>
@@ -76,7 +78,9 @@ class Convertor extends Component {
               </select>
             </div>
             <div className="result">
-              <div>{this.state.recieve.input} - {this.state.recieve.unit}</div>
+              <div>
+                {this.state.recieve.input} - {this.state.recieve.unit}
+              </div>
             </div>
           </form>
         </main>
@@ -84,8 +88,12 @@ class Convertor extends Component {
           <div className="example-usage">
             <details>
               <summary>Example usage:</summary>
-              /api/convert?input=4gal /api/convert?input=1/2km
-              /api/convert?input=5.4/3lbs /api/convert?input=kg
+              <ul>
+                <li>/api/convert?input=4gal</li>
+                <li>/api/convert?input=1/2km</li>
+                <li>/api/convert?input=5.4/3lbs</li>
+                <li>/api/convert?input=kg</li>
+              </ul>
             </details>
           </div>
           <div className="example-return">
@@ -95,6 +103,7 @@ class Convertor extends Component {
             </details>
           </div>
         </section>
+        <Footer />
       </div>
     );
   }

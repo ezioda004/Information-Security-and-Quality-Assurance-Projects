@@ -16,7 +16,7 @@ const convert = (input, unit) => {
         km: 1 / 1.60934
     }
     if (unit in obj) {
-        if (input % input != 0) return {input: "invalid value"};
+        if (input % input != 0) return {initNum: input, initUnit: unit, returnNum: "Invalid value"};
         const keys = Object.keys(obj);
         let rUnit = keys.indexOf(unit) >= (keys.length / 2) ? keys[keys.indexOf(unit) - 3] : keys[keys.indexOf(unit) + 3];
         let returnNum =  (obj[unit] * input).toFixed(5);

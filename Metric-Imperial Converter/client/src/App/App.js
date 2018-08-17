@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import axios from "axios";
+import Api from "../Api/Api";
 
 import Convertor from "../Convertor/Convertor";
 
@@ -14,6 +14,11 @@ class App extends Component {
           exact
           path="/"
           component = {Convertor}
+        />
+        <Route 
+          exact
+          path="/api/convert"
+          component = {Api}
         />
         <Route render = {() => (
           <div>Wrong path!!</div>
