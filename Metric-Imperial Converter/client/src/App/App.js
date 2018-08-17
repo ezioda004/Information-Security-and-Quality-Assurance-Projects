@@ -6,10 +6,6 @@ import axios from "axios";
 import Convertor from "../Convertor/Convertor";
 
 class App extends Component {
-  componentDidMount(){
-    console.log("did mount");
-    axios.get("/api/test").then(res => console.log(res)).catch(err => console.log(err));
-  }
   render() {
     return (
       <div className="App">

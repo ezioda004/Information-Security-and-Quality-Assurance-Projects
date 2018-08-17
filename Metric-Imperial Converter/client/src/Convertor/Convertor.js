@@ -5,10 +5,50 @@ import "./Convertor.css";
 class Convertor extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      send: {
+        input: "",
+        unit: "gal"
+      },
+      recieve: {
+        input: "",
+        unit: ""
+      }
+    };
   }
-  handleInput = e => {
-    console.log(e.target.value);
-
+  handleChange = event => {
+    let val = event.target;
+    console.log(event.target.value, event.target.nodeName);
+    let node = event.target.nodeName;
+    if (node == "INPUT") {
+      this.setState(prevState => ({
+        send: {
+          input: val.value,
+          unit: prevState.send.unit
+        }
+      }));
+    } else {
+      this.setState(prevState => ({
+        send: {
+          input: prevState.send.input,
+          unit: val.value
+        }
+      }));
+    }
+    axios
+      .get("/api/convert", {
+        params: {
+          input: node == "INPUT" ? event.target.value : this.state.send.input,
+          unit: node == "INPUT" ? this.state.send.unit : event.target.value
+        }
+      })
+      .then(res => this.setState({
+        recieve: {
+          input: res.data.returnNum,
+          unit: res.data.returnUnit
+        }
+      }))
+      .catch(err => console.log(err));
   };
   render() {
     const option = Array("gal", "L", "lbs", "kg", "mi", "km").map(unit => (
@@ -20,9 +60,10 @@ class Convertor extends Component {
       <div id="convertor">
         <h1>Metric-Imperial Converter</h1>
         <main>
-          <form onChange={this.handleInput}>
+          <form onChange={this.handleChange}>
             <div>
               <input
+                value={this.state.input}
                 type="text"
                 placeholder="🔍"
                 onFocus={e => (e.target.placeholder = "")}
@@ -35,7 +76,7 @@ class Convertor extends Component {
               </select>
             </div>
             <div className="result">
-              <div>The result will be shown here</div>
+              <div>{this.state.recieve.input} - {this.state.recieve.unit}</div>
             </div>
           </form>
         </main>
